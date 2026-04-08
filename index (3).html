@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nikhil Vinayak Adagatala | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --bg:#0c0a07;--bg2:#12100c;--bg3:#1a1710;--surface:#231f15;
+      --gold:#f5a623;--gold2:#ff7c1f;--goldglow:rgba(245,166,35,.15);
+      --text:#f0ead8;--muted:#8a7f68;--border:rgba(245,166,35,.2);
+      --radius:14px;--shadow:0 16px 48px rgba(0,0,0,.65);--tr:.32s cubic-bezier(.4,0,.2,1);
+    }
+    [data-theme="light"] {
+      --bg:#fdf6e3;--bg2:#fff9ed;--bg3:#f5edd6;--surface:#ecdfc2;
+      --text:#1a160a;--muted:#6b5f44;--border:rgba(180,110,10,.28);
+      --goldglow:rgba(245,166,35,.1);--shadow:0 8px 32px rgba(0,0,0,.12);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;overflow-x:hidden;transition:background var(--tr),color var(--tr)}
+    h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em}
+    a{color:var(--gold);text-decoration:none}
+    ::-webkit-scrollbar{width:4px}
+    ::-webkit-scrollbar-track{background:var(--bg)}
+    ::-webkit-scrollbar-thumb{background:var(--gold);border-radius:4px}
+
+    /* noise */
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+      opacity:.3}
+
+    /* nav */
+    nav{position:fixed;top:0;width:100%;z-index:999;display:flex;align-items:center;
+      justify-content:space-between;padding:0 6%;height:66px;
+      background:rgba(12,10,7,.85);backdrop-filter:blur(18px);
+      border-bottom:1px solid var(--border);transition:background var(--tr)}
+    [data-theme="light"] nav{background:rgba(253,246,227,.88)}
+    .logo{font-family:'Bebas Neue',sans-serif;font-size:1.55rem;letter-spacing:.12em;
+      background:linear-gradient(120deg,var(--gold),var(--gold2));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .nav-links{display:flex;gap:2.2rem;list-style:none}
+    .nav-links a{color:var(--muted);font-size:.82rem;font-weight:600;letter-spacing:.06em;
+      text-transform:uppercase;position:relative;transition:color var(--tr)}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;
+      width:0;height:2px;background:var(--gold);border-radius:2px;transition:width var(--tr)}
+    .nav-links a:hover{color:var(--gold)}
+    .nav-links a:hover::after{width:100%}
+    .nav-r{display:flex;align-items:center;gap:.8rem}
+    .tbtn{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);
+      background:var(--surface);color:var(--gold);cursor:pointer;font-size:.95rem;
+      display:flex;align-items:center;justify-content:center;transition:all var(--tr)}
+    .tbtn:hover{background:var(--gold);color:#0c0a07}
+    .hbg{display:none;flex-direction:column;gap:5px;cursor:pointer}
+    .hbg span{width:24px;height:2px;background:var(--text);border-radius:2px;transition:all var(--tr)}
+
+    /* reveal */
+    .rev{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease}
+    .rev-l{opacity:0;transform:translateX(-44px);transition:opacity .75s ease,transform .75s ease}
+    .rev-r{opacity:0;transform:translateX(44px);transition:opacity .75s ease,transform .75s ease}
+    .rev.on,.rev-l.on,.rev-r.on{opacity:1;transform:none}
+
+    /* section */
+    section{padding:110px 6%;position:relative;z-index:1}
+    .tag{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:3px;
+      text-transform:uppercase;color:var(--gold);border:1px solid var(--border);
+      padding:.28rem 1rem;border-radius:20px;margin-bottom:.9rem;background:var(--goldglow)}
+    .sec-title{font-size:clamp(2.8rem,5.5vw,4.2rem);line-height:1.02;margin-bottom:.8rem}
+    .sec-title .out{-webkit-text-stroke:1.5px var(--gold);color:transparent}
+    .sec-sub{color:var(--muted);max-width:540px;margin-bottom:3.5rem;font-size:.96rem}
+    .gline{height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-bottom:3.5rem;opacity:.3}
+
+    /* ── HERO ── */
+    #home{min-height:100vh;display:flex;align-items:center;padding-top:80px;overflow:hidden}
+    .hero-wrap{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;width:100%}
+    .hero-eye{font-size:.78rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;
+      color:var(--gold);margin-bottom:.9rem;display:flex;align-items:center;gap:.7rem}
+    .hero-eye::before{content:'';width:28px;height:1.5px;background:var(--gold);flex-shrink:0}
+    .hero-name{font-size:clamp(3rem,6.5vw,5.5rem);line-height:.98;margin-bottom:.7rem}
+    .hero-name .out{-webkit-text-stroke:1.5px var(--gold);color:transparent}
+    .hero-role{font-size:1.1rem;color:var(--muted);margin-bottom:1.5rem;font-weight:300}
+    .hero-desc{color:var(--muted);max-width:460px;margin-bottom:2rem;font-size:.96rem}
+    .ctas{display:flex;gap:1rem;flex-wrap:wrap}
+    .btn{padding:.72rem 1.9rem;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:700;
+      font-size:.87rem;cursor:pointer;border:none;display:inline-flex;align-items:center;
+      gap:.5rem;transition:all var(--tr);letter-spacing:.03em}
+    .btn-g{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0c0a07}
+    .btn-g:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(245,166,35,.4)}
+    .btn-o{background:transparent;color:var(--text);border:1.5px solid var(--border)}
+    .btn-o:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-3px)}
+    .stats{display:flex;gap:2.5rem;margin-top:2.2rem;flex-wrap:wrap}
+    .stat{border-left:2px solid var(--gold);padding-left:1rem}
+    .sn{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--gold);line-height:1}
+    .sl{font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-top:.1rem}
+    .photo-side{display:flex;justify-content:center;align-items:center}
+    .photo-frame{width:340px;height:340px;border-radius:22px;border:1.5px solid var(--gold);
+      background:var(--surface);overflow:hidden;position:relative;
+      box-shadow:0 0 70px rgba(245,166,35,.1),inset 0 0 40px rgba(245,166,35,.04);
+      animation:floatY 5s ease-in-out infinite}
+    @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+    .photo-frame img{width:100%;height:100%;object-fit:cover}
+    .photo-ph{width:100%;height:100%;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;gap:.6rem;color:var(--muted)}
+    .photo-ph i{font-size:3.5rem;color:var(--gold);opacity:.45}
+    .photo-ph small{font-size:.75rem;opacity:.65}
+    .photo-frame::before,.photo-frame::after{content:'';position:absolute;
+      width:22px;height:22px;border-color:var(--gold);border-style:solid}
+    .photo-frame::before{top:-1px;left:-1px;border-width:2px 0 0 2px;border-radius:4px 0 0 0}
+    .photo-frame::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0;border-radius:0 0 4px 0}
+    .orb{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none}
+    .o1{width:600px;height:600px;background:var(--gold);opacity:.06;top:-150px;right:-120px}
+    .o2{width:400px;height:400px;background:var(--gold2);opacity:.05;bottom:-100px;left:-80px}
+
+    /* ── ABOUT ── */
+    #about{background:var(--bg2)}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+      padding:1.5rem;margin-bottom:.9rem;transition:border-color var(--tr)}
+    .card:hover{border-color:var(--gold)}
+    .ch{font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+      color:var(--gold);margin-bottom:.85rem;display:flex;align-items:center;gap:.5rem}
+    .card p,.card li{color:var(--muted);font-size:.91rem}
+    .card ul{padding-left:1.1rem}
+    .card li{margin-bottom:.4rem}
+    .chips{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.5rem}
+    .chip{padding:.26rem .82rem;border-radius:20px;font-size:.76rem;font-weight:700;
+      background:var(--goldglow);color:var(--gold);border:1px solid var(--border)}
+
+    /* ── ACHIEVEMENTS ── */
+    #achievements{background:var(--bg)}
+    .ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:1.3rem}
+    .ach-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+      padding:1.6rem;position:relative;overflow:hidden;transition:all var(--tr)}
+    .ach-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+      background:linear-gradient(90deg,var(--gold),var(--gold2));
+      transform:scaleX(0);transform-origin:left;transition:transform var(--tr)}
+    .ach-card:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:var(--gold)}
+    .ach-card:hover::after{transform:scaleX(1)}
+    .ach-ico{width:46px;height:46px;border-radius:11px;background:var(--goldglow);
+      border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+      font-size:1.25rem;color:var(--gold);margin-bottom:.9rem}
+    .ach-card h3{font-family:'Outfit',sans-serif;font-weight:700;font-size:.98rem;margin-bottom:.4rem}
+    .ach-card p{color:var(--muted);font-size:.84rem;line-height:1.55}
+    .badge{display:inline-block;margin-top:.9rem;font-size:.68rem;font-weight:700;
+      letter-spacing:1.5px;text-transform:uppercase;padding:.22rem .7rem;border-radius:20px;
+      background:var(--goldglow);color:var(--gold);border:1px solid var(--border)}
+
+    /* ── PROJECTS ── */
+    #projects{background:var(--bg2)}
+    .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(335px,1fr));gap:2rem}
+    .proj-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+      overflow:hidden;transition:all var(--tr)}
+    .proj-card:hover{transform:translateY(-7px);box-shadow:0 20px 50px rgba(0,0,0,.5);border-color:var(--gold)}
+    .proj-thumb{height:200px;background:var(--surface);position:relative;overflow:hidden;
+      display:flex;align-items:center;justify-content:center}
+    .proj-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+    .proj-card:hover .proj-thumb img{transform:scale(1.06)}
+    .proj-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;
+      justify-content:center;gap:.5rem;color:var(--muted);
+      background:linear-gradient(135deg,var(--bg2),var(--surface))}
+    .proj-ph i{font-size:2.5rem;color:var(--gold);opacity:.35}
+    .proj-ph small{font-size:.73rem;opacity:.6}
+    .proj-ov{position:absolute;inset:0;background:rgba(245,166,35,.07);
+      display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity var(--tr)}
+    .proj-card:hover .proj-ov{opacity:1}
+    .proj-body{padding:1.4rem}
+    .ptags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.7rem}
+    .ptag{font-size:.68rem;font-weight:700;padding:.2rem .62rem;border-radius:20px;
+      background:var(--goldglow);color:var(--gold);letter-spacing:.5px}
+    .proj-body h3{font-family:'Outfit',sans-serif;font-weight:700;font-size:1.04rem;margin-bottom:.4rem}
+    .proj-body p{color:var(--muted);font-size:.85rem;margin-bottom:.95rem}
+    .plinks{display:flex;gap:.65rem}
+    .plink{font-size:.78rem;font-weight:700;color:var(--gold);border:1px solid var(--border);
+      padding:.35rem .88rem;border-radius:6px;display:flex;align-items:center;gap:.3rem;
+      transition:all var(--tr)}
+    .plink:hover{background:var(--gold);color:#0c0a07;border-color:var(--gold)}
+
+    /* ── GALLERY ── */
+    #gallery{background:var(--bg)}
+    .gal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+    .gi{border-radius:10px;overflow:hidden;cursor:pointer;position:relative;
+      background:var(--surface);border:1px solid var(--border);
+      transition:all var(--tr);aspect-ratio:1}
+    .gi.wide{grid-column:span 2;aspect-ratio:2/1}
+    .gi.tall{grid-row:span 2;aspect-ratio:auto}
+    .gi:hover{border-color:var(--gold);box-shadow:0 8px 28px rgba(245,166,35,.18)}
+    .gi img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+    .gi:hover img{transform:scale(1.06)}
+    .g-ph{width:100%;height:100%;min-height:140px;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;gap:.4rem;color:var(--muted);font-size:.76rem}
+    .g-ph i{font-size:1.9rem;color:var(--gold);opacity:.32}
+    .g-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,10,7,.82),transparent);
+      display:flex;align-items:flex-end;justify-content:space-between;padding:.8rem;
+      opacity:0;transition:opacity var(--tr)}
+    .gi:hover .g-ov{opacity:1}
+    .g-ov span{font-size:.76rem;font-weight:600;color:#fff}
+    .g-ov i{font-size:.95rem;color:var(--gold)}
+
+    /* ── LIGHTBOX ── */
+    .lb{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.94);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      opacity:0;pointer-events:none;transition:opacity .3s}
+    .lb.open{opacity:1;pointer-events:all}
+    .lb-img{max-width:90vw;max-height:80vh;border-radius:10px;object-fit:contain;
+      box-shadow:0 0 60px rgba(245,166,35,.15);display:none}
+    .lb-cap{margin-top:1rem;color:var(--gold);font-size:.88rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+    .lb-x{position:fixed;top:1.5rem;right:2rem;font-size:1.8rem;color:#fff;cursor:pointer;
+      z-index:10000;opacity:.75;transition:opacity var(--tr)}
+    .lb-x:hover{opacity:1;color:var(--gold)}
+    .lb-nav{display:flex;gap:1.5rem;margin-top:1.2rem}
+    .lb-btn{background:var(--surface);border:1px solid var(--border);color:var(--gold);
+      width:42px;height:42px;border-radius:50%;cursor:pointer;font-size:.95rem;
+      display:flex;align-items:center;justify-content:center;transition:all var(--tr)}
+    .lb-btn:hover{background:var(--gold);color:#0c0a07}
+    .lb-ph{max-width:420px;padding:2.5rem;background:var(--surface);border-radius:12px;
+      text-align:center;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:.9rem}
+    .lb-ph i{font-size:3rem;color:var(--gold);opacity:.32}
+    .lb-ph code{color:var(--gold);background:var(--goldglow);padding:.1rem .4rem;border-radius:4px}
+
+    /* ── CONTACT ── */
+    #contact{background:var(--bg2)}
+    .cont-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:4rem}
+    .ci{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;
+      border-radius:10px;border:1px solid var(--border);background:var(--surface);
+      margin-bottom:.8rem;transition:all var(--tr)}
+    .ci:hover{border-color:var(--gold);transform:translateX(5px)}
+    .ci i{font-size:1.1rem;color:var(--gold);width:25px;text-align:center}
+    .cil{font-size:.68rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)}
+    .civ{font-weight:600;font-size:.92rem}
+    .soc-row{display:flex;gap:.7rem;margin-top:1.4rem}
+    .soc{width:42px;height:42px;border-radius:50%;border:1px solid var(--border);
+      background:var(--surface);color:var(--muted);font-size:1rem;
+      display:flex;align-items:center;justify-content:center;transition:all var(--tr)}
+    .soc:hover{background:var(--gold);color:#0c0a07;border-color:var(--gold);transform:translateY(-3px)}
+    .form{display:flex;flex-direction:column;gap:1rem}
+    .fg{display:flex;flex-direction:column;gap:.32rem}
+    .fg label{font-size:.73rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px}
+    .fg input,.fg textarea{background:var(--surface);border:1px solid var(--border);color:var(--text);
+      padding:.78rem 1rem;border-radius:8px;font-size:.92rem;font-family:'Outfit',sans-serif;
+      outline:none;transition:border-color var(--tr)}
+    .fg input:focus,.fg textarea:focus{border-color:var(--gold)}
+    .fg textarea{resize:vertical;min-height:130px}
+    .fmsg{font-size:.87rem;color:var(--gold);margin-top:.3rem;display:none}
+
+    footer{text-align:center;padding:2rem 5%;border-top:1px solid var(--border);
+      color:var(--muted);font-size:.83rem;position:relative;z-index:1}
+    footer b{color:var(--gold)}
+
+    @media(max-width:900px){
+      .hero-wrap,.about-grid,.cont-grid{grid-template-columns:1fr}
+      .photo-side{order:-1}
+      .photo-frame{width:210px;height:210px;border-radius:16px}
+      .nav-links{display:none;position:fixed;top:66px;left:0;right:0;background:var(--bg2);
+        flex-direction:column;padding:1.5rem 6%;border-bottom:1px solid var(--border);gap:1.3rem}
+      .nav-links.open{display:flex}
+      .hbg{display:flex}
+      .gal-grid{grid-template-columns:repeat(2,1fr)}
+      .gi.wide,.gi.tall{grid-column:span 1;grid-row:span 1;aspect-ratio:1}
+    }
+    @media(max-width:520px){
+      section{padding:75px 5%}
+      .proj-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">NVA</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-r">
+    <button class="tbtn" id="themeBtn"><i class="fas fa-sun"></i></button>
+    <div class="hbg" id="hbg"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="home">
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="hero-wrap">
+    <div class="rev-l">
+      <div class="hero-eye">Portfolio · 2025</div>
+      <h1 class="hero-name">NIKHIL<br><span class="out">VINAYAK</span><br>ADAGATALA</h1>
+      <p class="hero-role">B.Tech CSE &nbsp;·&nbsp; AI Enthusiast &nbsp;·&nbsp; Developer</p>
+      <p class="hero-desc">Passionate about intelligent systems and full-stack applications. Currently in my 2nd semester of Computer Science Engineering — always learning, always building.</p>
+      <div class="ctas">
+        <a href="#projects" class="btn btn-g"><i class="fas fa-rocket"></i> View Projects</a>
+        <a href="#contact" class="btn btn-o"><i class="fas fa-envelope"></i> Contact Me</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="sn">3+</div><div class="sl">Projects</div></div>
+        <div class="stat"><div class="sn">5+</div><div class="sl">Certificates</div></div>
+        <div class="stat"><div class="sn">CSE</div><div class="sl">2nd Sem</div></div>
+      </div>
+    </div>
+    <div class="photo-side rev-r">
+      <div class="photo-frame">
+        <!--
+          ADD YOUR PHOTO:
+          1. Place your photo at: assets/images/profile.jpg
+          2. Replace the div.photo-ph below with:
+             <img src="assets/images/profile.jpg" alt="Nikhil Vinayak Adagatala">
+        -->
+        <div class="photo-ph">
+          <i class="fas fa-user"></i>
+          <span>Your Photo Here</span>
+          <small>assets/images/profile.jpg</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about">
+  <div class="rev">
+    <div class="tag">About Me</div>
+    <h2 class="sec-title">WHO <span class="out">I AM</span></h2>
+    <p class="sec-sub">A driven tech student with an eye for design, a love for AI, and a habit of building things from scratch.</p>
+    <div class="gline"></div>
+  </div>
+  <div class="about-grid">
+    <div>
+      <div class="card rev"><div class="ch"><i class="fas fa-graduation-cap"></i> Education</div>
+        <p><strong>B.Tech – Computer Science & Engineering</strong><br>2nd Semester &nbsp;|&nbsp; 2024–2028<br><span style="color:var(--muted)">Your College Name, Your University</span></p>
+      </div>
+      <div class="card rev"><div class="ch"><i class="fas fa-bullseye"></i> Goals</div>
+        <ul>
+          <li>Build AI-powered applications for real-world impact</li>
+          <li>Contribute to open-source and developer communities</li>
+          <li>Land a software engineering role at a top tech company</li>
+          <li>Grow continuously in ML, cloud, and full-stack development</li>
+        </ul>
+      </div>
+      <div class="card rev"><div class="ch"><i class="fas fa-heart"></i> Interests</div>
+        <div class="chips">
+          <span class="chip">Artificial Intelligence</span><span class="chip">Web Development</span>
+          <span class="chip">FinTech</span><span class="chip">Open Source</span>
+          <span class="chip">UI/UX Design</span><span class="chip">Problem Solving</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card rev"><div class="ch"><i class="fas fa-star"></i> Strengths</div>
+        <ul>
+          <li>Quick learner with strong analytical mindset</li>
+          <li>Creative problem-solver with attention to detail</li>
+          <li>Effective team collaborator and communicator</li>
+          <li>Self-motivated, goal-oriented, and deadline-driven</li>
+        </ul>
+      </div>
+      <div class="card rev"><div class="ch"><i class="fas fa-code"></i> Technical Skills</div>
+        <div class="chips">
+          <span class="chip">HTML/CSS/JS</span><span class="chip">Python</span>
+          <span class="chip">C / C++</span><span class="chip">Java</span>
+          <span class="chip">Git &amp; GitHub</span><span class="chip">SQL</span>
+          <span class="chip">React (Learning)</span><span class="chip">AI/ML Basics</span>
+        </div>
+      </div>
+      <div class="card rev"><div class="ch"><i class="fas fa-globe"></i> Languages</div>
+        <div class="chips">
+          <span class="chip">English</span><span class="chip">Hindi</span><span class="chip">Telugu</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ACHIEVEMENTS ═══ -->
+<section id="achievements">
+  <div class="rev">
+    <div class="tag">Achievements</div>
+    <h2 class="sec-title">CERTS &amp; <span class="out">AWARDS</span></h2>
+    <p class="sec-sub">Academic milestones, college projects, and professional certifications that define my learning journey.</p>
+    <div class="gline"></div>
+  </div>
+  <div class="ach-grid">
+    <div class="ach-card rev"><div class="ach-ico"><i class="fas fa-robot"></i></div>
+      <h3>Ai4A Project</h3>
+      <p>AI for All — explored foundational AI concepts and built a prototype addressing a social challenge using machine learning techniques.</p>
+      <div class="badge">College Project</div>
+    </div>
+    <div class="ach-card rev"><div class="ach-ico"><i class="fas fa-lightbulb"></i></div>
+      <h3>Design Thinking Project</h3>
+      <p>Applied the 5-stage Design Thinking framework (Empathize → Define → Ideate → Prototype → Test) to craft a user-centered solution.</p>
+      <div class="badge">College Project</div>
+    </div>
+    <div class="ach-card rev"><div class="ach-ico"><i class="fas fa-trophy"></i></div>
+      <h3>ACE Project</h3>
+      <p>Academic Capstone Experience — end-to-end software project showcasing planning, design, implementation, and professional presentation skills.</p>
+      <div class="badge">College Project</div>
+    </div>
+    <div class="ach-card rev"><div class="ach-ico"><i class="fas fa-certificate"></i></div>
+      <h3>Coursera Certificate</h3>
+      <p>Completed a professional course on Coursera — [Add your course name, e.g. Machine Learning / Python / Data Science] with hands-on assignments.</p>
+      <div class="badge">Coursera</div>
+    </div>
+    <div class="ach-card rev"><div class="ach-ico"><i class="fas fa-network-wired"></i></div>
+      <h3>Cisco NetAcad Certificate</h3>
+      <p>Completed Cisco Networking Academy course in [e.g. Introduction to Networks / Cybersecurity Essentials], gaining solid networking fundamentals.</p>
+      <div class="badge">Cisco NetAcad</div>
+    </div>
+    <div class="ach-card rev"><div class="ach-ico"><i class="fas fa-brain"></i></div>
+      <h3>Yuva AI Certificate</h3>
+      <p>Awarded certificate for completing the Yuva AI program — covering AI fundamentals, real-world applications, and ethics of artificial intelligence.</p>
+      <div class="badge">Yuva AI</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROJECTS ═══ -->
+<section id="projects">
+  <div class="rev">
+    <div class="tag">Projects</div>
+    <h2 class="sec-title">WHAT I'VE <span class="out">BUILT</span></h2>
+    <p class="sec-sub">A curated collection of personal and academic projects showcasing my technical range and creativity.</p>
+    <div class="gline"></div>
+  </div>
+  <div class="proj-grid">
+    <div class="proj-card rev">
+      <div class="proj-thumb">
+        <!-- <img src="assets/images/proj-ai4a.png" alt="Ai4A Project"> -->
+        <div class="proj-ph"><i class="fas fa-robot"></i><small>assets/images/proj-ai4a.png</small></div>
+        <div class="proj-ov"><i class="fas fa-eye" style="color:var(--gold);font-size:1.5rem"></i></div>
+      </div>
+      <div class="proj-body">
+        <div class="ptags"><span class="ptag">Python</span><span class="ptag">AI/ML</span></div>
+        <h3>Ai4A — AI for All</h3>
+        <p>AI-powered prototype built as part of the Ai4A initiative, applying machine learning to address a social impact problem with an accessible interface.</p>
+        <div class="plinks">
+          <a href="#" class="plink"><i class="fab fa-github"></i> GitHub</a>
+          <a href="#" class="plink"><i class="fas fa-external-link-alt"></i> Live</a>
+        </div>
+      </div>
+    </div>
+    <div class="proj-card rev">
+      <div class="proj-thumb">
+        <!-- <img src="assets/images/proj-dt.png" alt="Design Thinking"> -->
+        <div class="proj-ph"><i class="fas fa-lightbulb"></i><small>assets/images/proj-dt.png</small></div>
+        <div class="proj-ov"><i class="fas fa-eye" style="color:var(--gold);font-size:1.5rem"></i></div>
+      </div>
+      <div class="proj-body">
+        <div class="ptags"><span class="ptag">Design Thinking</span><span class="ptag">Prototype</span></div>
+        <h3>Design Thinking Prototype</h3>
+        <p>User-centered prototype developed using the design thinking methodology — empathizing with users and iterating to reach a refined, tested solution.</p>
+        <div class="plinks">
+          <a href="#" class="plink"><i class="fab fa-github"></i> GitHub</a>
+          <a href="#" class="plink"><i class="fas fa-external-link-alt"></i> Demo</a>
+        </div>
+      </div>
+    </div>
+    <div class="proj-card rev">
+      <div class="proj-thumb">
+        <!-- <img src="assets/images/proj-ace.png" alt="ACE Project"> -->
+        <div class="proj-ph"><i class="fas fa-code"></i><small>assets/images/proj-ace.png</small></div>
+        <div class="proj-ov"><i class="fas fa-eye" style="color:var(--gold);font-size:1.5rem"></i></div>
+      </div>
+      <div class="proj-body">
+        <div class="ptags"><span class="ptag">HTML/CSS/JS</span><span class="ptag">Full Stack</span></div>
+        <h3>ACE Capstone Project</h3>
+        <p>End-to-end software project built for the Academic Capstone Experience — from planning and design through implementation and professional presentation.</p>
+        <div class="plinks">
+          <a href="#" class="plink"><i class="fab fa-github"></i> GitHub</a>
+          <a href="#" class="plink"><i class="fas fa-external-link-alt"></i> Live</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ GALLERY ═══ -->
+<section id="gallery">
+  <div class="rev">
+    <div class="tag">Gallery</div>
+    <h2 class="sec-title">PHOTOS &amp; <span class="out">CERTS</span></h2>
+    <p class="sec-sub">A visual showcase of my certificates, college events, and memorable moments.</p>
+    <div class="gline"></div>
+  </div>
+  <div class="gal-grid rev" id="galGrid">
+    <div class="gi wide" data-idx="0" data-cap="Coursera Certificate">
+      <!-- <img src="assets/images/cert-coursera.jpg" alt="Coursera"> -->
+      <div class="g-ph"><i class="fas fa-certificate"></i><span>Coursera Certificate</span></div>
+      <div class="g-ov"><span>Coursera</span><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="gi" data-idx="1" data-cap="NetAcad Certificate">
+      <!-- <img src="assets/images/cert-netacad.jpg" alt="NetAcad"> -->
+      <div class="g-ph"><i class="fas fa-network-wired"></i><span>NetAcad Cert</span></div>
+      <div class="g-ov"><span>NetAcad</span><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="gi" data-idx="2" data-cap="Yuva AI Certificate">
+      <!-- <img src="assets/images/cert-yuvaai.jpg" alt="Yuva AI"> -->
+      <div class="g-ph"><i class="fas fa-brain"></i><span>Yuva AI Cert</span></div>
+      <div class="g-ov"><span>Yuva AI</span><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="gi" data-idx="3" data-cap="Ai4A Project">
+      <!-- <img src="assets/images/ai4a.jpg" alt="Ai4A"> -->
+      <div class="g-ph"><i class="fas fa-robot"></i><span>Ai4A Project</span></div>
+      <div class="g-ov"><span>Ai4A</span><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="gi" data-idx="4" data-cap="Design Thinking">
+      <!-- <img src="assets/images/design-thinking.jpg" alt="DT"> -->
+      <div class="g-ph"><i class="fas fa-lightbulb"></i><span>Design Thinking</span></div>
+      <div class="g-ov"><span>Design Thinking</span><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="gi tall" data-idx="5" data-cap="ACE Project">
+      <!-- <img src="assets/images/ace.jpg" alt="ACE"> -->
+      <div class="g-ph"><i class="fas fa-trophy"></i><span>ACE Project</span></div>
+      <div class="g-ov"><span>ACE Project</span><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="gi" data-idx="6" data-cap="Event Photo">
+      <!-- <img src="assets/images/event1.jpg" alt="Event"> -->
+      <div class="g-ph"><i class="fas fa-image"></i><span>Event Photo</span></div>
+      <div class="g-ov"><span>Event</span><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="gi" data-idx="7" data-cap="Photo">
+      <!-- <img src="assets/images/photo2.jpg" alt="Photo"> -->
+      <div class="g-ph"><i class="fas fa-image"></i><span>Add Photo</span></div>
+      <div class="g-ov"><span>Photo</span><i class="fas fa-expand"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="rev">
+    <div class="tag">Contact</div>
+    <h2 class="sec-title">GET IN <span class="out">TOUCH</span></h2>
+    <p class="sec-sub">Open to collaborations, internships, or just a great conversation about tech.</p>
+    <div class="gline"></div>
+  </div>
+  <div class="cont-grid">
+    <div class="rev-l">
+      <div class="ci"><i class="fas fa-envelope"></i><div>
+        <div class="cil">Email</div>
+        <!-- Replace with your email -->
+        <div class="civ">nikhil.adagatala@example.com</div>
+      </div></div>
+      <div class="ci"><i class="fas fa-phone"></i><div>
+        <div class="cil">Phone</div>
+        <!-- Replace with your phone -->
+        <div class="civ">+91 XXXXX XXXXX</div>
+      </div></div>
+      <div class="ci"><i class="fas fa-map-marker-alt"></i><div>
+        <div class="cil">Location</div><div class="civ">India</div>
+      </div></div>
+      <div class="soc-row">
+        <!-- Replace # with real URLs -->
+        <a href="#" class="soc" title="GitHub"><i class="fab fa-github"></i></a>
+        <a href="#" class="soc" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" class="soc" title="X / Twitter"><i class="fab fa-x-twitter"></i></a>
+        <a href="#" class="soc" title="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="rev-r">
+      <div class="form">
+        <div class="fg"><label>Your Name</label><input id="cN" type="text" placeholder="John Doe"></div>
+        <div class="fg"><label>Email</label><input id="cE" type="email" placeholder="john@example.com"></div>
+        <div class="fg"><label>Message</label><textarea id="cM" placeholder="Hi Nikhil, I'd love to connect..."></textarea></div>
+        <button class="btn btn-g" onclick="sendMsg()" style="width:fit-content"><i class="fas fa-paper-plane"></i> Send Message</button>
+        <div class="fmsg" id="fmsg"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Crafted with ♥ by <b>Nikhil Vinayak Adagatala</b> &nbsp;·&nbsp; B.Tech CSE &nbsp;·&nbsp; © 2025</p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb">
+  <span class="lb-x" id="lbX"><i class="fas fa-times"></i></span>
+  <img class="lb-img" id="lbImg" src="" alt="">
+  <div class="lb-ph" id="lbPh">
+    <i class="fas fa-image"></i>
+    <p id="lbTxt">Upload the image to <code>assets/images/</code> and replace the placeholder div with an &lt;img&gt; tag.</p>
+  </div>
+  <div class="lb-cap" id="lbCap"></div>
+  <div class="lb-nav">
+    <button class="lb-btn" id="lbPrev"><i class="fas fa-chevron-left"></i></button>
+    <button class="lb-btn" id="lbNext"><i class="fas fa-chevron-right"></i></button>
+  </div>
+</div>
+
+<script>
+/* ── Theme ── */
+const html = document.documentElement;
+const tBtn = document.getElementById('themeBtn');
+const saved = localStorage.getItem('nva-theme') || 'dark';
+applyTheme(saved);
+tBtn.addEventListener('click', () => applyTheme(html.dataset.theme === 'dark' ? 'light' : 'dark'));
+function applyTheme(t) {
+  html.dataset.theme = t;
+  localStorage.setItem('nva-theme', t);
+  tBtn.innerHTML = t === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+}
+
+/* ── Hamburger ── */
+const hbg = document.getElementById('hbg');
+const nav = document.getElementById('navLinks');
+hbg.addEventListener('click', () => nav.classList.toggle('open'));
+nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+
+/* ── Scroll Reveal ── */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('on'), i * 85);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.rev,.rev-l,.rev-r').forEach(el => io.observe(el));
+
+/* ── Active Nav ── */
+const secs = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  secs.forEach(s => { if (window.scrollY >= s.offsetTop - 80) cur = s.id; });
+  nav.querySelectorAll('a').forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--gold)' : '';
+  });
+});
+
+/* ── Lightbox ── */
+const lb    = document.getElementById('lb');
+const lbImg = document.getElementById('lbImg');
+const lbPh  = document.getElementById('lbPh');
+const lbTxt = document.getElementById('lbTxt');
+const lbCap = document.getElementById('lbCap');
+const lbX   = document.getElementById('lbX');
+const lbPrev= document.getElementById('lbPrev');
+const lbNext= document.getElementById('lbNext');
+const gItems= [...document.querySelectorAll('.gi')];
+let cur = 0;
+
+function openLB(idx) {
+  cur = idx;
+  const item = gItems[idx];
+  const cap  = item.dataset.cap || '';
+  const img  = item.querySelector('img');
+  lbCap.textContent = cap;
+  if (img) {
+    lbImg.src = img.src; lbImg.alt = cap;
+    lbImg.style.display = 'block'; lbPh.style.display = 'none';
+  } else {
+    lbImg.style.display = 'none'; lbPh.style.display = 'flex';
+    lbTxt.innerHTML = `Upload image for <strong>${cap}</strong> to <code>assets/images/</code> and add an &lt;img&gt; tag in the gallery item.`;
+  }
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLB() { lb.classList.remove('open'); document.body.style.overflow = ''; }
+
+gItems.forEach((item, i) => item.addEventListener('click', () => openLB(i)));
+lbX.addEventListener('click', closeLB);
+lb.addEventListener('click', e => { if (e.target === lb) closeLB(); });
+lbNext.addEventListener('click', () => openLB((cur + 1) % gItems.length));
+lbPrev.addEventListener('click', () => openLB((cur - 1 + gItems.length) % gItems.length));
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLB();
+  if (e.key === 'ArrowRight') openLB((cur + 1) % gItems.length);
+  if (e.key === 'ArrowLeft')  openLB((cur - 1 + gItems.length) % gItems.length);
+});
+
+/* ── Contact Form ── */
+function sendMsg() {
+  const n = document.getElementById('cN').value.trim();
+  const e = document.getElementById('cE').value.trim();
+  const m = document.getElementById('cM').value.trim();
+  const el = document.getElementById('fmsg');
+  if (!n || !e || !m) { el.style.color='#ff6b35'; el.style.display='block'; el.textContent='⚠️ Please fill all fields.'; return; }
+  el.style.color='var(--gold)'; el.style.display='block';
+  el.textContent="✅ Message noted — I'll get back to you soon!";
+  document.getElementById('cN').value='';
+  document.getElementById('cE').value='';
+  document.getElementById('cM').value='';
+}
+</script>
+</body>
+</html>
